@@ -55,7 +55,7 @@ User class definition:
 - Last Name
 - Address
 - City
-- Zip code
+- Postal code
 - Country
 - email address
 - password hash
