@@ -1,0 +1,15 @@
+﻿services:
+  rabbitmq:
+      image: masstransit/rabbitmq
+      ports:
+        - 15672:15672
+        - 5672:5672
+  eventstore-pgsql:
+      image: postgres
+      ports:
+        - 5432:5432
+      environment:
+        POSTGRES_PASSWORD: postgres
+    
+      
+    
