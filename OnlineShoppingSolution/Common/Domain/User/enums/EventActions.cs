@@ -1,7 +1,8 @@
 ﻿namespace UserService.Domain.enums;
 
-public enum UserActions
+public enum EventActions
 {
     Get,
-    Delete
+    Delete,
+    Create
 }

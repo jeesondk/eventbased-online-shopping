@@ -1,4 +1,5 @@
 ﻿using Common.Consumer;
+using Common.Domain.User.Events;
 using Marten;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

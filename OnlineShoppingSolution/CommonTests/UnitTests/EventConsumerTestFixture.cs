@@ -1,4 +1,6 @@
 ﻿using Common.Consumer;
+using Common.Domain.User.Entities;
+using Common.Domain.User.Events;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using UserService.Domain.Events;
@@ -16,18 +18,22 @@ public class EventConsumerTestFixture: IDisposable
     {
         return new CreateUser
         {
+            User = new User {
             UserName = "IronMan",
             FirstName = "Tony",
             LastName = "Stark",
             Address = "Stark drive 1",
             City = "StarkCity",
             PostalCode = "40000",
-            Password = "I4mI0rnMan"
+            Country = "USA",
+            Email = "Tony@stark.com"
+            },
+            Password = "I4mI0rnM4n!"
+
+            
         };
     }
     
     public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
+    { }
 }
