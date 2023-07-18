@@ -1,9 +1,6 @@
-﻿using UserService.Domain.enums;
+﻿namespace Common.Domain.User.Events;
 
-namespace UserService.Domain.Events;
-
-public class UserAction
+public class GetUser
 {
-    public EventActions Action { get; set; }
     public string UserName { get; set; } = string.Empty;
 }
