@@ -1,3 +1,4 @@
+using Common.Domain.User.Entities;
 using Common.Domain.User.Events;
 
 namespace UserService;
@@ -5,5 +6,5 @@ namespace UserService;
 public interface IUserService
 {
     void CreateUserEvent(CreateUser @event);
-    void GetUser(GetUser @event);
+    User GetUser(GetUser @event);
 }

@@ -1,4 +1,5 @@
-﻿using Common.Domain.User.Events;
+﻿using Common.Domain.User.Entities;
+using Common.Domain.User.Events;
 using UserService.Users.Commands;
 using UserService.Users.Queries;
 
@@ -22,7 +23,7 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public void GetUser(GetUser @event)
+    public User GetUser(GetUser @event)
     {
         throw new NotImplementedException();
     }
