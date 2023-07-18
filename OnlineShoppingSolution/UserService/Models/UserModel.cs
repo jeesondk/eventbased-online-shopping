@@ -14,7 +14,7 @@ namespace UserService.Models;
 [PrimaryKey("Id")]
 public class UserModel
 {
-    [Key]
+
     public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(64)]
     public string UserName { get; set; } = string.Empty;
