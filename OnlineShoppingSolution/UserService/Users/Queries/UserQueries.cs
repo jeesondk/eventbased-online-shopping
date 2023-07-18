@@ -5,7 +5,7 @@ namespace UserService.Users.Queries;
 /// <summary>
 /// CQRS Query collection for User datastore
 /// </summary>
-public class UserQueries
+public class UserQueries : IUserQueries
 {
     private readonly IUserRepository _repository;
 
