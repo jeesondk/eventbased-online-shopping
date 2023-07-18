@@ -5,12 +5,19 @@ using UserService;
 using UserService.Context;
 using UserService.Infrastructure;
 using UserService.Users;
+using UserService.Users.Commands;
+using UserService.Users.Queries;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
         services.AddTransient<IUserRepository, UserRepository>();
-        services.AddTransient<IUserService, UserService.UserService>();
+        services.AddTransient<IUserCommands, UserCommands>();
+        services.AddTransient<IUserQueries, UserQueries>();
+        services.AddTransient<IUserService, Service>();
+        services.AddTransient<IEventPublisher<GetUserResponse>, EventPublisher<GetUserResponse>>();
+        services.AddTransient<IEventPublisher<CreateUserResponse>, EventPublisher<CreateUserResponse>>();
+        
         services.AddMassTransit(opt =>
         {
             opt.AddConsumer<EventConsumer<CreateUser>>();

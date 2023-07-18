@@ -5,9 +5,9 @@ using UserService.Users.Queries;
 
 namespace UserService;
 
-public class UserService : IUserService
+public class Service : IUserService
 {
-    private readonly ILogger<UserService> _logger;
+    private readonly ILogger<Service> _logger;
     private readonly IUserCommands _commands;
     private readonly IUserQueries _queries;
     private readonly IEventPublisher<GetUserResponse> _publishGetUserResponse;
@@ -20,7 +20,8 @@ public class UserService : IUserService
     /// <param name="commands"></param>
     /// <param name="queries"></param>
     /// <param name="publishGetUserResponse"></param>
-    public UserService(ILogger<UserService> logger, IUserCommands commands, IUserQueries queries, IEventPublisher<GetUserResponse> publishGetUserResponse, IEventPublisher<CreateUserResponse> publishCreateUserResponse)
+    /// <param name="publishCreateUserResponse"></param>
+    public Service(ILogger<Service> logger, IUserCommands commands, IUserQueries queries, IEventPublisher<GetUserResponse> publishGetUserResponse, IEventPublisher<CreateUserResponse> publishCreateUserResponse)
     {
         _logger = logger;
         _commands = commands;

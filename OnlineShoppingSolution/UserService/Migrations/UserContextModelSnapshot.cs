@@ -22,7 +22,7 @@ namespace UserService.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("UserService.Models.AddressModel", b =>
+            modelBuilder.Entity("Service.Models.AddressModel", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace UserService.Migrations
                     b.ToTable("Address", "Users");
                 });
 
-            modelBuilder.Entity("UserService.Models.UserModel", b =>
+            modelBuilder.Entity("Service.Models.UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,9 +97,9 @@ namespace UserService.Migrations
                     b.ToTable("User", "Users");
                 });
 
-            modelBuilder.Entity("UserService.Models.UserModel", b =>
+            modelBuilder.Entity("Service.Models.UserModel", b =>
                 {
-                    b.HasOne("UserService.Models.AddressModel", "Address")
+                    b.HasOne("Service.Models.AddressModel", "Address")
                         .WithMany()
                         .HasForeignKey("AddressUserId")
                         .OnDelete(DeleteBehavior.Cascade)

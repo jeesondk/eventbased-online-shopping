@@ -13,7 +13,7 @@ namespace UserServiceTests.UnitTests;
 public class UserServiceTests
 {
     private IUserService _userService;
-    private ILogger<UserService.UserService> _logger;
+    private ILogger<UserService.Service> _logger;
     private IUserCommands _userCommands;
     private IUserQueries _userQueries;
     private readonly IEventPublisher<GetUserResponse> _publishGetUserReponse;
@@ -21,13 +21,13 @@ public class UserServiceTests
 
     public UserServiceTests()
     {
-        _logger = Substitute.For<ILogger<UserService.UserService>>();
+        _logger = Substitute.For<ILogger<UserService.Service>>();
         _userCommands = Substitute.For<IUserCommands>();
         _userQueries = Substitute.For<IUserQueries>();
         _publishGetUserReponse = Substitute.For<IEventPublisher<GetUserResponse>>();
         _publishCreateUserReponse = Substitute.For<IEventPublisher<CreateUserResponse>>();
         
-        _userService = new UserService.UserService(_logger, _userCommands, _userQueries, _publishGetUserReponse, _publishCreateUserReponse);
+        _userService = new UserService.Service(_logger, _userCommands, _userQueries, _publishGetUserReponse, _publishCreateUserReponse);
     }
 
     [Fact]
