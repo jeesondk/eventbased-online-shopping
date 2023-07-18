@@ -6,7 +6,7 @@ namespace UserService.Users.Extentions;
 public static class UserEnityToModel
 {
     
-    public static AddressModel ToModel(this Address address)
+    private static AddressModel ToModel(this Address address)
     {
         return new AddressModel
         {
@@ -14,6 +14,14 @@ public static class UserEnityToModel
             City = address.City,
             PostalCode = address.PostalCode,
             Country = address.Country
+        };
+    }
+
+    private static PasswordModel ToModel(this Password password)
+    {
+        return new PasswordModel
+        {
+            Password = password.secret
         };
     }
     
@@ -26,6 +34,7 @@ public static class UserEnityToModel
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
+            Password = user.Password.ToModel(),
             Address = user.Address.ToModel()
         };
     }

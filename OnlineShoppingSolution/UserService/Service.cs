@@ -1,17 +1,16 @@
-﻿using Common.Domain.User.Events;
-using UserService.Infrastructure;
+﻿using Common.Domain.User.Entities;
+using Common.Domain.User.Events;
+using MassTransit;
 using UserService.Users.Commands;
 using UserService.Users.Queries;
 
 namespace UserService;
 
-public class Service : IUserService
+public class Service : IService
 {
     private readonly ILogger<Service> _logger;
     private readonly IUserCommands _commands;
     private readonly IUserQueries _queries;
-    private readonly IEventPublisher<GetUserResponse> _publishGetUserResponse;
-    private readonly IEventPublisher<CreateUserResponse> _publishCreateUserResponse;
 
     /// <summary>
     /// Service Layer, intention is to decouple Event infrastructure and CQRS classes 
@@ -21,25 +20,29 @@ public class Service : IUserService
     /// <param name="queries"></param>
     /// <param name="publishGetUserResponse"></param>
     /// <param name="publishCreateUserResponse"></param>
-    public Service(ILogger<Service> logger, IUserCommands commands, IUserQueries queries, IEventPublisher<GetUserResponse> publishGetUserResponse, IEventPublisher<CreateUserResponse> publishCreateUserResponse)
+    public Service(ILogger<Service> logger, IUserCommands commands, IUserQueries queries)
     {
         _logger = logger;
         _commands = commands;
         _queries = queries;
-        _publishGetUserResponse = publishGetUserResponse;
-        _publishCreateUserResponse = publishCreateUserResponse;
     }
 
-    public async Task CreateUser(CreateUser @event)
+    public async Task CreateUser(ConsumeContext<CreateUser> context)
     {
-        await _commands.Create(@event.User);
-        await _publishCreateUserResponse.PublishEvent(new CreateUserResponse {UserName = @event.User.UserName});
+        _logger.LogInformation("Creating User...");
+        
+        await _commands.Create(context.Message.User);
+        _logger.LogInformation("User Created: {UserName}", context.Message.User.UserName);
+        await context.RespondAsync<CreateUserResponse>(new {UserName = context.Message.User.UserName});
     }
 
-    public async Task GetUser(GetUser @event)
+    public async Task GetUser(ConsumeContext<GetUser> context)
     {
-        var user = await _queries.Get(@event.UserName);
-        await _publishGetUserResponse.PublishEvent(new GetUserResponse {User = user});
+        _logger.LogInformation("Get User...");
+
+        var user = await _queries.Get(context.Message.UserName);
+        _logger.LogInformation("User retrieved: {UserName}", context.Message.UserName);
+        await context.RespondAsync<GetUserResponse>(new { User = user});
     }
     
 }

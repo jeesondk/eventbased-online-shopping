@@ -10,9 +10,9 @@ namespace UserService.Infrastructure;
 public class EventConsumer<T>: IConsumer<T> where T : class
 {
     private readonly ILogger<EventConsumer<T>> _logger;
-    private readonly IUserService _service;
+    private readonly IService _service;
     
-    public EventConsumer(ILogger<EventConsumer<T>> logger, IUserService service)
+    public EventConsumer(ILogger<EventConsumer<T>> logger, IService service)
     {
         _logger = logger;
         _service = service;
@@ -25,12 +25,12 @@ public class EventConsumer<T>: IConsumer<T> where T : class
         switch (context.Message.GetType().Name)
         {
             case nameof(CreateUser):
-                await _service.CreateUser((context.Message as CreateUser)!);
+                await _service.CreateUser((context as ConsumeContext<CreateUser>)!);
                 break;
             case nameof(GetUser):
-                await _service.GetUser((context.Message as GetUser)!);
+                await _service.GetUser((context as ConsumeContext<GetUser>)!);
                 break;
-            default: throw new ArgumentException("Unknowen Event type");
+            default: throw new ArgumentException("Unknown Event type");
         }
 
         _logger.LogInformation("Done processing event");

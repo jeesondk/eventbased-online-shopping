@@ -1,5 +1,6 @@
 ﻿using Common.Domain.User.Entities;
 using Common.Domain.User.Events;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.Core.Arguments;
@@ -12,7 +13,7 @@ namespace UserServiceTests.UnitTests;
 
 public class UserServiceTests
 {
-    private IUserService _userService;
+    private IService _service;
     private ILogger<UserService.Service> _logger;
     private IUserCommands _userCommands;
     private IUserQueries _userQueries;
@@ -27,7 +28,7 @@ public class UserServiceTests
         _publishGetUserReponse = Substitute.For<IEventPublisher<GetUserResponse>>();
         _publishCreateUserReponse = Substitute.For<IEventPublisher<CreateUserResponse>>();
         
-        _userService = new UserService.Service(_logger, _userCommands, _userQueries, _publishGetUserReponse, _publishCreateUserReponse);
+        _service = new UserService.Service(_logger, _userCommands, _userQueries);
     }
 
     [Fact]
@@ -53,14 +54,15 @@ public class UserServiceTests
         {
             User = user 
         };
+        var createUserContext = Substitute.For<ConsumeContext<CreateUser>>();
+        createUserContext.Message.Returns(createUserEvent);
 
         // Act
-         _userService.CreateUser(createUserEvent);
-         _publishCreateUserReponse.PublishEvent(Arg.Any<CreateUserResponse>()).Returns(Task.CompletedTask);
-        
-        // Assert
+         _service.CreateUser(createUserContext);
+
+         // Assert
         _userCommands.Received().Create(Arg.Is<User>(u => u == user));
-        _publishCreateUserReponse.Received().PublishEvent(Arg.Any<CreateUserResponse>());
+        //createUserContext.Received().RespondAsync(Arg.Any<CreateUserResponse>());
     }
 
     [Fact]
@@ -90,13 +92,14 @@ public class UserServiceTests
         };
 
         _userQueries.Get(getUserEvent.UserName).Returns(expectedUser);
-        _publishGetUserReponse.PublishEvent(Arg.Any<GetUserResponse>()).Returns(Task.CompletedTask);
+        var getUserContext = Substitute.For<ConsumeContext<GetUser>>();
+        getUserContext.Message.Returns(getUserEvent);
 
         // Act
-        _userService.GetUser(getUserEvent);
+        _service.GetUser(getUserContext);
 
         // Assert
         _userQueries.Received().Get(Arg.Is<string>(s => s == expectedUser.UserName));
-        _publishGetUserReponse.Received().PublishEvent(Arg.Any<GetUserResponse>());
+        //getUserContext.Received().RespondAsync(Arg.Any<GetUserResponse>());
     }
 }

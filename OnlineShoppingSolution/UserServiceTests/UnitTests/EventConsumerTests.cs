@@ -13,16 +13,16 @@ public class EventConsumerTests
     private readonly EventConsumer<GetUser> _getUserEventConsumer;
     private readonly ILogger<EventConsumer<CreateUser>> _createUserLogger;
     private readonly ILogger<EventConsumer<GetUser>> _getUserLogger;
-    private readonly IUserService _userService;
+    private readonly IService _service;
     
     public EventConsumerTests()
     {
         _createUserLogger = Substitute.For<ILogger<EventConsumer<CreateUser>>>();
         _getUserLogger = Substitute.For<ILogger<EventConsumer<GetUser>>>();
-        _userService = Substitute.For<IUserService>();
+        _service = Substitute.For<IService>();
         
-        _createUserEventConsumer = new EventConsumer<CreateUser>(_createUserLogger, _userService);
-        _getUserEventConsumer = new EventConsumer<GetUser>(_getUserLogger, _userService);
+        _createUserEventConsumer = new EventConsumer<CreateUser>(_createUserLogger, _service);
+        _getUserEventConsumer = new EventConsumer<GetUser>(_getUserLogger, _service);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class EventConsumerTests
         await _createUserEventConsumer.Consume(createUserContext);
         
         // Assert
-        await _userService.Received().CreateUser(Arg.Any<CreateUser>());
+        await _service.Received().CreateUser(Arg.Any<ConsumeContext<CreateUser>>());
     }
 
     [Fact]
@@ -50,6 +50,6 @@ public class EventConsumerTests
         await _getUserEventConsumer.Consume(getUserContext);
 
         // Assert
-        await _userService.Received().GetUser(Arg.Any<GetUser>());
+        await _service.Received().GetUser(Arg.Any<ConsumeContext<GetUser>>());
     }
 }

@@ -14,7 +14,6 @@ namespace UserService.Models;
 [PrimaryKey("Id")]
 public class UserModel
 {
-
     public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(64)]
     public string UserName { get; set; } = string.Empty;
@@ -24,6 +23,8 @@ public class UserModel
     public string FirstName { get; set; } = string.Empty;
     [MaxLength(256)]
     public string LastName { get; set; } = string.Empty;
+
+    public PasswordModel Password { get; set; } = new();
     public AddressModel Address { get; set; } = new();
 
     public User ToEntity()
@@ -35,7 +36,8 @@ public class UserModel
             Email = Email,
             FirstName = FirstName,
             LastName = LastName,
-            Address = Address.ToEntity()
+            Address = Address.ToEntity(),
+            Password = Password.ToEntity()
         };
     }
 }

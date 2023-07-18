@@ -46,6 +46,10 @@ public class UserRepositoryTest: IClassFixture<UserRepositoryTestFixture>
                 City = "Test city",
                 PostalCode = "9999",
                 Country = "Test"
+            },
+            Password = new PasswordModel
+            {
+                Password = "secRet!"
             }
         };
         

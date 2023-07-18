@@ -12,9 +12,7 @@ namespace UserService.Models;
 [PrimaryKey("UserId")]
 public class AddressModel
 {
-
-    [Key]
-    [ForeignKey("UserId")]
+    [ForeignKey("UserId-Address")]
     public Guid UserId { get; set; }
     [MaxLength(256)]
     public string Street { get; set; } = string.Empty;

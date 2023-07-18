@@ -30,6 +30,10 @@ public class UserRepositoryTestFixture: IDisposable
                 City = "Test city",
                 PostalCode = "9999",
                 Country = "Test"
+            },
+            Password = new PasswordModel
+            {
+                Password = "secRet!"
             }
         },
             new UserModel
@@ -44,6 +48,10 @@ public class UserRepositoryTestFixture: IDisposable
                     City = "Test city",
                     PostalCode = "9999",
                     Country = "Test"
+                },
+                Password = new PasswordModel
+                {
+                    Password = "secRet!"
                 }
             }
         }.AsQueryable();

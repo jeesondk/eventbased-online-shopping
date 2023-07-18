@@ -14,23 +14,21 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IUserCommands, UserCommands>();
         services.AddTransient<IUserQueries, UserQueries>();
-        services.AddTransient<IUserService, Service>();
-        services.AddTransient<IEventPublisher<GetUserResponse>, EventPublisher<GetUserResponse>>();
-        services.AddTransient<IEventPublisher<CreateUserResponse>, EventPublisher<CreateUserResponse>>();
-        
+        services.AddTransient<IService, Service>();
+
         services.AddMassTransit(opt =>
         {
             opt.AddConsumer<EventConsumer<CreateUser>>();
             opt.AddConsumer<EventConsumer<GetUser>>();
-
+            
             opt.UsingRabbitMq((ctx, cfg) =>
             {
                 cfg.Host(hostContext.Configuration.GetValue<string>("RabbitMQ:Host"), "/", host =>
                 {
                     host.Username(hostContext.Configuration.GetValue<string>("RabbitMQ:Username"));
-                    host.Password(hostContext.Configuration.GetValue<string>("RabbitMQ:Password"));
+                    host.Password(hostContext.Configuration.GetValue<string>("RabbitMQ:secret"));
                 });
-    
+
                 cfg.ConfigureEndpoints(ctx);
             });
         });

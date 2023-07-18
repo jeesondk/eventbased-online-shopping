@@ -1,9 +1,6 @@
-﻿using UserService.Domain.enums;
-
-namespace Common.Domain.User.Events;
+﻿namespace Common.Domain.User.Events;
 
 public class CreateUser
 {
     public Entities.User User { get; set; } = new();
-    public string Password { get; set; } = string.Empty;
 }
