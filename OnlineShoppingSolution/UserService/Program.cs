@@ -14,6 +14,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddMassTransit(opt =>
         {
             opt.AddConsumer<EventConsumer<CreateUser>>();
+            opt.AddConsumer<EventConsumer<GetUser>>();
 
             opt.UsingRabbitMq((ctx, cfg) =>
             {

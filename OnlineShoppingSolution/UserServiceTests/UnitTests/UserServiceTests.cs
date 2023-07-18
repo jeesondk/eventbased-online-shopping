@@ -2,7 +2,9 @@
 using Common.Domain.User.Events;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using UserService;
+using UserService.Infrastructure;
 using UserService.Users.Commands;
 using UserService.Users.Queries;
 
@@ -14,14 +16,16 @@ public class UserServiceTests
     private ILogger<UserService.UserService> _logger;
     private IUserCommands _userCommands;
     private IUserQueries _userQueries;
-    
+    private readonly IEventPublisher<GetUserResponse> _publishGetUserReponse;
+
     public UserServiceTests()
     {
         _logger = Substitute.For<ILogger<UserService.UserService>>();
         _userCommands = Substitute.For<IUserCommands>();
         _userQueries = Substitute.For<IUserQueries>();
+        _publishGetUserReponse = Substitute.For<IEventPublisher<GetUserResponse>>();
         
-        _userService = new UserService.UserService(_logger, _userCommands, _userQueries);
+        _userService = new UserService.UserService(_logger, _userCommands, _userQueries, _publishGetUserReponse);
     }
 
     [Fact]
@@ -82,11 +86,13 @@ public class UserServiceTests
         };
 
         _userQueries.Get(getUserEvent.UserName).Returns(expectedUser);
+        _publishGetUserReponse.PublishEvent(Arg.Any<GetUserResponse>()).Returns(Task.CompletedTask);
 
         // Act
         _userService.GetUser(getUserEvent);
 
         // Assert
         _userQueries.Received().Get(Arg.Is<string>(s => s == expectedUser.UserName));
+        _publishGetUserReponse.Received().PublishEvent(Arg.Any<GetUserResponse>());
     }
 }

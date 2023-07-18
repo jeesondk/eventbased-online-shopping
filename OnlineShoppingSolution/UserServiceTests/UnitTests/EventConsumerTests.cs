@@ -9,11 +9,11 @@ namespace UserServiceTests.UnitTests;
 
 public class EventConsumerTests
 {
-    private EventConsumer<CreateUser> _createUserEventConsumer;
-    private EventConsumer<GetUser> _getUserEventConsumer;
-    private ILogger<EventConsumer<CreateUser>> _createUserLogger;
-    private ILogger<EventConsumer<GetUser>> _getUserLogger;
-    private IUserService _userService;
+    private readonly EventConsumer<CreateUser> _createUserEventConsumer;
+    private readonly EventConsumer<GetUser> _getUserEventConsumer;
+    private readonly ILogger<EventConsumer<CreateUser>> _createUserLogger;
+    private readonly ILogger<EventConsumer<GetUser>> _getUserLogger;
+    private readonly IUserService _userService;
     
     public EventConsumerTests()
     {

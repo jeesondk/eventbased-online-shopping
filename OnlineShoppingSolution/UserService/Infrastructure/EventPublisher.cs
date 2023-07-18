@@ -2,7 +2,7 @@
 
 namespace UserService.Infrastructure;
 
-public class EventPublisher<T> where T : class
+public class EventPublisher<T> : IEventPublisher<T> where T : class
 {
     private readonly IBus _eventbus;
 
