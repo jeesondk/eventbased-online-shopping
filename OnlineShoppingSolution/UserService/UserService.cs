@@ -25,6 +25,8 @@ public class UserService : IUserService
     public async Task GetUser(GetUser @event)
     {
         var user = await _queries.Get(@event.UserName);
+        //TODO
+        // Add publish event call
     }
     
 }
