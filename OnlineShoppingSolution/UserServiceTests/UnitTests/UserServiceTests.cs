@@ -1,6 +1,5 @@
 ﻿using Common.Domain.User.Entities;
 using Common.Domain.User.Events;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using UserService;
@@ -50,14 +49,14 @@ public class UserServiceTests
         };
 
         // Act
-         _userService.CreateUserEvent(createUserEvent);
+         _userService.CreateUser(createUserEvent);
         
         // Assert
         _userCommands.Received().Create(Arg.Is<User>(u => u == user)); 
     }
 
     [Fact]
-    public async void GetUser_ShouldCallGetOnUserQueries()
+    public void GetUser_ShouldCallGetOnUserQueries()
     {
         // Arrange
         var getUserEvent = new GetUser
@@ -85,9 +84,9 @@ public class UserServiceTests
         _userQueries.Get(getUserEvent.UserName).Returns(expectedUser);
 
         // Act
-        var result = await _userService.GetUser(getUserEvent);
+        _userService.GetUser(getUserEvent);
 
         // Assert
-        result.Should().BeEquivalentTo(expectedUser);
+        _userQueries.Received().Get(Arg.Is<string>(s => s == expectedUser.UserName));
     }
 }

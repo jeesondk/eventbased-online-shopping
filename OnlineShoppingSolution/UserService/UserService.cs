@@ -1,5 +1,4 @@
-﻿using Common.Domain.User.Entities;
-using Common.Domain.User.Events;
+﻿using Common.Domain.User.Events;
 using UserService.Users.Commands;
 using UserService.Users.Queries;
 
@@ -18,14 +17,14 @@ public class UserService : IUserService
         _queries = queries;
     }
 
-    public async Task CreateUserEvent(CreateUser @event)
+    public async Task CreateUser(CreateUser @event)
     {
         await _commands.Create(@event.User);
     }
 
-    public async Task<User> GetUser(GetUser @event)
+    public async Task GetUser(GetUser @event)
     {
-        return await _queries.Get(@event.UserName);
+        var user = await _queries.Get(@event.UserName);
     }
     
 }

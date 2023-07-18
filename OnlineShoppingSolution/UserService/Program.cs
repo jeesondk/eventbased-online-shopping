@@ -1,13 +1,19 @@
+using Common.Domain.User.Events;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using UserService;
 using UserService.Context;
+using UserService.Infrastructure;
+using UserService.Users;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IUserService, UserService.UserService>();
         services.AddMassTransit(opt =>
         {
-            //opt.AddConsumer<EventConsumer<CreateUser>>();
+            opt.AddConsumer<EventConsumer<CreateUser>>();
 
             opt.UsingRabbitMq((ctx, cfg) =>
             {
