@@ -26,7 +26,7 @@ public static class UserEnityToModel
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Address = user.
+            Address = user.Address.ToModel()
         };
     }
 }
