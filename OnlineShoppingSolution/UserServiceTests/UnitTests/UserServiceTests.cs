@@ -17,6 +17,7 @@ public class UserServiceTests
     private IUserCommands _userCommands;
     private IUserQueries _userQueries;
     private readonly IEventPublisher<GetUserResponse> _publishGetUserReponse;
+    private readonly IEventPublisher<CreateUserResponse> _publishCreateUserReponse;
 
     public UserServiceTests()
     {
@@ -24,8 +25,9 @@ public class UserServiceTests
         _userCommands = Substitute.For<IUserCommands>();
         _userQueries = Substitute.For<IUserQueries>();
         _publishGetUserReponse = Substitute.For<IEventPublisher<GetUserResponse>>();
+        _publishCreateUserReponse = Substitute.For<IEventPublisher<CreateUserResponse>>();
         
-        _userService = new UserService.UserService(_logger, _userCommands, _userQueries, _publishGetUserReponse);
+        _userService = new UserService.UserService(_logger, _userCommands, _userQueries, _publishGetUserReponse, _publishCreateUserReponse);
     }
 
     [Fact]
@@ -54,9 +56,11 @@ public class UserServiceTests
 
         // Act
          _userService.CreateUser(createUserEvent);
+         _publishCreateUserReponse.PublishEvent(Arg.Any<CreateUserResponse>()).Returns(Task.CompletedTask);
         
         // Assert
-        _userCommands.Received().Create(Arg.Is<User>(u => u == user)); 
+        _userCommands.Received().Create(Arg.Is<User>(u => u == user));
+        _publishCreateUserReponse.Received().PublishEvent(Arg.Any<CreateUserResponse>());
     }
 
     [Fact]
