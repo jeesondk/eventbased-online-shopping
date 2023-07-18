@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Consumer\" />
       <Folder Include="Domain\User\Aggregates\" />
       <Folder Include="Producer\" />
     </ItemGroup>
