@@ -5,6 +5,6 @@ namespace UserService;
 
 public interface IUserService
 {
-    void CreateUserEvent(CreateUser @event);
-    User GetUser(GetUser @event);
+    Task CreateUserEvent(CreateUser @event);
+    Task<User> GetUser(GetUser @event);
 }

@@ -57,7 +57,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void GetUser_ShouldCallGetOnUserQueries()
+    public async void GetUser_ShouldCallGetOnUserQueries()
     {
         // Arrange
         var getUserEvent = new GetUser
@@ -67,6 +67,7 @@ public class UserServiceTests
 
         var expectedUser = new User
         {
+            Id = Guid.NewGuid(),
             UserName = "TestUser1",
             Email = "testuser1@test.com",
             FirstName = "Test 1",
@@ -84,7 +85,7 @@ public class UserServiceTests
         _userQueries.Get(getUserEvent.UserName).Returns(expectedUser);
 
         // Act
-        var result = _userService.GetUser(getUserEvent);
+        var result = await _userService.GetUser(getUserEvent);
 
         // Assert
         result.Should().BeEquivalentTo(expectedUser);

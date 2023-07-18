@@ -18,14 +18,14 @@ public class UserService : IUserService
         _queries = queries;
     }
 
-    public void CreateUserEvent(CreateUser @event)
+    public async Task CreateUserEvent(CreateUser @event)
     {
-        throw new NotImplementedException();
+        await _commands.Create(@event.User);
     }
 
-    public User GetUser(GetUser @event)
+    public async Task<User> GetUser(GetUser @event)
     {
-        throw new NotImplementedException();
+        return await _queries.Get(@event.UserName);
     }
     
 }
