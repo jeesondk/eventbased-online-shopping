@@ -3,6 +3,10 @@ using MassTransit;
 
 namespace UserService.Infrastructure;
 
+/// <summary>
+/// Generic EventConsumer class for consuming Event from MassTransit infrastructure
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class EventConsumer<T>: IConsumer<T> where T : class
 {
     private readonly ILogger<EventConsumer<T>> _logger;

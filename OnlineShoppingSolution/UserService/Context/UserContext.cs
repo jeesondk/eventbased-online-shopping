@@ -4,6 +4,9 @@ using UserService.Models;
 
 namespace UserService.Context;
 
+/// <summary>
+/// EntityFramework Context class for underlying data store
+/// </summary>
 public class UserContext: DbContext
 {
     public DbSet<UserModel> Users { get; set; }

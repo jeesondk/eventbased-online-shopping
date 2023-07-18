@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UserService.Models;
 
+/// <summary>
+/// ORM Model: User
+/// </summary>
 [Table("User", Schema = "Users")]
 [Index(nameof(UserName), IsUnique = true)]
 [Index(nameof(Id))]

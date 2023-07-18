@@ -12,6 +12,13 @@ public class UserService : IUserService
     private readonly IUserQueries _queries;
     private readonly IEventPublisher<GetUserResponse> _publishGetUserResponse;
 
+    /// <summary>
+    /// Service Layer, intention is to decouple Event infrastructure and CQRS classes 
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="commands"></param>
+    /// <param name="queries"></param>
+    /// <param name="publishGetUserResponse"></param>
     public UserService(ILogger<UserService> logger, IUserCommands commands, IUserQueries queries, IEventPublisher<GetUserResponse> publishGetUserResponse )
     {
         _logger = logger;

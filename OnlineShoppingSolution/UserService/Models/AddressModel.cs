@@ -4,7 +4,9 @@ using Common.Domain.User.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace UserService.Models;
-
+/// <summary>
+/// ORM Model: Address
+/// </summary>
 [Table("Address", Schema = "Users")]
 [Index(nameof(UserId), IsUnique = true)]
 [PrimaryKey("UserId")]
