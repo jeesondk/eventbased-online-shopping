@@ -1,3 +1,4 @@
+using API.Stubs;
 using Common.Domain.User.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication;
@@ -10,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+
+builder.Services.AddTransient<IProductCatalogStub, ProductCatalogStub>();
 
 builder.Services.AddMassTransit(opt =>
 {

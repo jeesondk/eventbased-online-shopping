@@ -1,12 +1,13 @@
 ﻿using System.Net;
 using API.Entites;
-using Common.Domain.User.Entities;
 using Common.Domain.User.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-
+/// <summary>
+/// API Controller for handling "Create and Read" User actions
+/// </summary>
 [Route("api/[controller]")]
 public class UserController: Controller
 {
@@ -22,6 +23,11 @@ public class UserController: Controller
         _getUserClient = getUserClient;
     }
 
+    /// <summary>
+    /// Creates a new User based on a "NewUser" object
+    /// </summary>
+    /// <param name="payload"></param>
+    /// <returns></returns>
     [HttpPost]
     [Consumes("application/json")]
     public async Task<IActionResult> CreateUser([FromBody] NewUser payload)
@@ -41,9 +47,13 @@ public class UserController: Controller
             _logger.LogError(rx.Message);
             return StatusCode((int) HttpStatusCode.RequestTimeout);
         }
-        
     }
 
+    /// <summary>
+    /// Get a user from the database based on UserName
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
     [HttpGet]
     [Produces("application/json")]
     public async Task<IActionResult> GetUserByUserName([FromQuery(Name = "UserName")] string userName)
