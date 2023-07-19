@@ -29,7 +29,6 @@ public static class UserEnityToModel
     {
         return new UserModel
         {
-            Id = Guid.NewGuid(),
             UserName = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,

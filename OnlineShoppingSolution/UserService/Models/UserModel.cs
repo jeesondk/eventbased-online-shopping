@@ -11,10 +11,10 @@ namespace UserService.Models;
 [Table("User", Schema = "Users")]
 [Index(nameof(UserName), IsUnique = true)]
 [Index(nameof(Id))]
-[PrimaryKey("Id")]
 public class UserModel
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    [Key]
+    public Guid Id { get; set; }
     [MaxLength(64)]
     public string UserName { get; set; } = string.Empty;
     [MaxLength(256)]
@@ -23,7 +23,6 @@ public class UserModel
     public string FirstName { get; set; } = string.Empty;
     [MaxLength(256)]
     public string LastName { get; set; } = string.Empty;
-
     public PasswordModel Password { get; set; } = new();
     public AddressModel Address { get; set; } = new();
 
@@ -31,7 +30,6 @@ public class UserModel
     {
         return new User
         {
-            Id = Id,
             UserName = UserName,
             Email = Email,
             FirstName = FirstName,

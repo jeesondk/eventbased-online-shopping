@@ -76,7 +76,6 @@ public class UserServiceTests
 
         var expectedUser = new User
         {
-            Id = Guid.NewGuid(),
             UserName = "TestUser1",
             Email = "testuser1@test.com",
             FirstName = "Test 1",

@@ -24,7 +24,7 @@ namespace UserService.Migrations
 
             modelBuilder.Entity("UserService.Models.AddressModel", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -48,9 +48,9 @@ namespace UserService.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("Address", "Users");
@@ -58,7 +58,7 @@ namespace UserService.Migrations
 
             modelBuilder.Entity("UserService.Models.PasswordModel", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -66,9 +66,9 @@ namespace UserService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("Password", "Users");
@@ -80,7 +80,7 @@ namespace UserService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AddressUserId")
+                    b.Property<Guid>("AddressId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
@@ -98,7 +98,7 @@ namespace UserService.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid>("PasswordUserId")
+                    b.Property<Guid>("PasswordId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
@@ -108,11 +108,11 @@ namespace UserService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressUserId");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("Id");
 
-                    b.HasIndex("PasswordUserId");
+                    b.HasIndex("PasswordId");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -124,13 +124,13 @@ namespace UserService.Migrations
                 {
                     b.HasOne("UserService.Models.AddressModel", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressUserId")
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UserService.Models.PasswordModel", "Password")
                         .WithMany()
-                        .HasForeignKey("PasswordUserId")
+                        .HasForeignKey("PasswordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

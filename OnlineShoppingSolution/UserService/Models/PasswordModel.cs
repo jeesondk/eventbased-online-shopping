@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Common.Domain.User.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +9,11 @@ namespace UserService.Models;
 /// ORM Model: secret
 /// </summary>
 [Table("Password", Schema = "Users")]
-[Index(nameof(UserId), IsUnique = true)]
-[PrimaryKey("UserId")]
-public class PasswordModel
-{
-    [ForeignKey("UserId-Password")]
-    public Guid UserId { get; set; }
+[Index(nameof(Id), IsUnique = true)]
+public class PasswordModel 
+{   
+    [Key]
+    public Guid Id { get; set; }
     public string Password { get; set; } = string.Empty;
 
     public Password ToEntity()

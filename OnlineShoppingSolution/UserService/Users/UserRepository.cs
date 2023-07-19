@@ -29,7 +29,10 @@ public class UserRepository : IUserRepository
     /// <returns>UserModel</returns>
     public async Task<UserModel> GetUserByUserName(string userName)
     {
-        var model = await _dbSet.AsNoTracking().Where(u => u.UserName == userName).SingleAsync();
+        var model = await _dbSet.AsNoTracking().Where(u => u.UserName == userName)
+            .Include(p => p.Password)
+            .Include(a => a.Address)
+            .SingleAsync();
         return model;
     }
     

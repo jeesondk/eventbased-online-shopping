@@ -1,5 +1,6 @@
 ﻿using Common.Domain.User.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using UserService.Models;
 
 namespace UserService.Context;
@@ -16,6 +17,11 @@ public class UserContext: DbContext
     { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {  }
+    {
+        modelBuilder
+            .Entity<UserModel>()
+            .Property(b => b.Id)
+            .HasValueGenerator<GuidValueGenerator>();
+    }
     
 }

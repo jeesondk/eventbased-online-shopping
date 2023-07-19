@@ -8,12 +8,11 @@ namespace UserService.Models;
 /// ORM Model: Address
 /// </summary>
 [Table("Address", Schema = "Users")]
-[Index(nameof(UserId), IsUnique = true)]
-[PrimaryKey("UserId")]
+[Index(nameof(Id), IsUnique = true)]
 public class AddressModel
 {
-    [ForeignKey("UserId-Address")]
-    public Guid UserId { get; set; }
+    [Key]
+    public Guid Id { get; set; }
     [MaxLength(256)]
     public string Street { get; set; } = string.Empty;
     [MaxLength(256)]
