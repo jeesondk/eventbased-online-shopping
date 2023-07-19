@@ -11,12 +11,12 @@ namespace API.Controllers;
 public class ShopController: Controller
 {
     private readonly ILogger<ShopController> _logger;
-    private readonly IRequestClient<CreateBasket> _createClient;
+    private readonly IRequestClient<NewSession> _createClient;
     private readonly IRequestClient<AddItem> _addClient;
     private readonly IRequestClient<RemoveItem> _removeClient;
-    private readonly IRequestClient<GetBasket> _getClient;
+    private readonly IRequestClient<GetSession> _getClient;
 
-    public ShopController(ILogger<ShopController> logger, IRequestClient<CreateBasket> createClient, IRequestClient<AddItem> addClient, IRequestClient<RemoveItem> removeClient, IRequestClient<GetBasket> getClient)
+    public ShopController(ILogger<ShopController> logger, IRequestClient<NewSession> createClient, IRequestClient<AddItem> addClient, IRequestClient<RemoveItem> removeClient, IRequestClient<GetSession> getClient)
     {
         _logger = logger;
         _createClient = createClient;
@@ -31,7 +31,7 @@ public class ShopController: Controller
     [ProducesResponseType(typeof(ShopSession), 200 )]
     public async Task<IActionResult> NewShopSession()
     {
-        var request = new CreateBasket
+        var request = new NewSession
         {
             Id = NewId.NextGuid()
         };
@@ -102,7 +102,7 @@ public class ShopController: Controller
     [ProducesResponseType(typeof(ShopSession), 200 )]
     public async Task<IActionResult> GetSession([FromRoute] Guid sessionId)
     {
-        var request = new GetBasket
+        var request = new GetSession
         {
             Id = sessionId,
         };

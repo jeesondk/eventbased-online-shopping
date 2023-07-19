@@ -1,6 +1,6 @@
 ﻿namespace Common.Domain.Shop.Events;
 
-public class GetBasket
+public class GetSession
 {
     public Guid Id { get; set; }
 }

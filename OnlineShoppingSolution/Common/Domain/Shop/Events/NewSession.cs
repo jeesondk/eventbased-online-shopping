@@ -1,6 +1,6 @@
 ﻿namespace Common.Domain.Shop.Events;
 
-public class CreateBasket
+public class NewSession
 {
     public Guid Id { get; set; }
 }
