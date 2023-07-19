@@ -1,15 +1,60 @@
-﻿services:
+﻿version: "1.0"
+
+networks:
+  nexiapp:
+      driver: bridge
+
+services:
   rabbitmq:
       image: masstransit/rabbitmq
+      networks: [ nexiapp ]
       ports:
         - 15672:15672
         - 5672:5672
-  eventstore-pgsql:
+      healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 30s
+        timeout: 30s
+        retries: 3
+        
+  pgsql:
       image: postgres
+      restart: on-failure
+      networks: [ nexiapp ]
+      volumes:
+        - ./db/scripts:/docker-entrypoint-initdb.d
       ports:
         - 5432:5432
       environment:
         POSTGRES_PASSWORD: postgres
-    
-      
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+
+  api:
+    image: api:latest
+    networks: [ nexiapp ]
+    ports:
+      - 8900:80
+    depends_on: 
+        rabbitmq:
+          condition: service_healthy
+
+  user-service:
+      image: userservice:latest
+      networks: [ nexiapp ]
+      depends_on: 
+        pgsql:
+          condition: service_healthy
+        rabbitmq:
+          condition: service_healthy
+  
+  Store-service:
+    image: storeservice:latest
+    networks: [ nexiapp ]
+    depends_on: 
+        pgsql:
+          condition: service_healthy
+        rabbitmq:
+          condition: service_healthy
+  
     
