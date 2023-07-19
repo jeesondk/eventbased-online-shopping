@@ -2,5 +2,5 @@
 
 public class Password
 {
-    public string secret { get; set; }
+    public string secret { get; set; } = String.Empty;
 }

@@ -3,6 +3,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY ["Common/Common.csproj", "Common/"]
 COPY ["UserService/UserService.csproj", "UserService/"]
 RUN dotnet restore "UserService/UserService.csproj"
 COPY . .

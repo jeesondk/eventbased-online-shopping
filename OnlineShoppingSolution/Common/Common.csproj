@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="JasperFx.Core" Version="1.4.0" />
       <PackageReference Include="MassTransit.Abstractions" Version="8.0.16" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     </ItemGroup>

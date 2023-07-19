@@ -38,7 +38,7 @@ public class ShopController: Controller
 
         try
         {
-            var response = await _createClient.GetResponse<CreateBasketResponse>(request);
+            var response = await _createClient.GetResponse<NewSessionResponse>(request);
             return Ok(new ShopSession{ Id = response.Message.Id});
         }
         catch (RequestException rx)
@@ -109,7 +109,7 @@ public class ShopController: Controller
 
         try
         {
-            var response = await _getClient.GetResponse<GetBasketResponse>(request);
+            var response = await _getClient.GetResponse<GetSessionResponse>(request);
             return Ok(new ShopSession {Id = response.Message.Id, Items = response.Message.Items});
         }
         catch (RequestException rx)

@@ -17,17 +17,13 @@ public class UserServiceTests
     private ILogger<UserService.Service> _logger;
     private IUserCommands _userCommands;
     private IUserQueries _userQueries;
-    private readonly IEventPublisher<GetUserResponse> _publishGetUserReponse;
-    private readonly IEventPublisher<CreateUserResponse> _publishCreateUserReponse;
 
     public UserServiceTests()
     {
         _logger = Substitute.For<ILogger<UserService.Service>>();
         _userCommands = Substitute.For<IUserCommands>();
         _userQueries = Substitute.For<IUserQueries>();
-        _publishGetUserReponse = Substitute.For<IEventPublisher<GetUserResponse>>();
-        _publishCreateUserReponse = Substitute.For<IEventPublisher<CreateUserResponse>>();
-        
+
         _service = new UserService.Service(_logger, _userCommands, _userQueries);
     }
 

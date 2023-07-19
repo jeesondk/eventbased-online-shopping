@@ -8,8 +8,6 @@ using StoreService.Infrastructure;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
-        services.AddTransient<IService, Service>();
-        
         services.AddMarten(opt =>
             {
                 opt.Connection(hostContext.Configuration.GetConnectionString("EventStore")!);
@@ -17,7 +15,6 @@ IHost host = Host.CreateDefaultBuilder(args)
             .OptimizeArtifactWorkflow()
             .UseLightweightSessions()
             .InitializeWith();
-        
         services.AddMassTransit(opt =>
         {
             opt.AddConsumer<EventConsumer<NewSession>>();
@@ -38,6 +35,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             });
         });
         
+        services.AddTransient<IService, Service>();
     })
     .Build();
 

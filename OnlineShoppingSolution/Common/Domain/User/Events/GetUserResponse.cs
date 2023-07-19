@@ -2,5 +2,5 @@
 
 public class GetUserResponse
 {
-    public Entities.User User { get; set; }
+    public Entities.User User { get; set; } = new Entities.User();
 }
